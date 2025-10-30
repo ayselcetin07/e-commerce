@@ -1,0 +1,13 @@
+# Backend
+bin/
+obj/
+
+# Frontend
+node_modules/
+.next/
+.env
+.env.local
+
+# Genel
+*.log
+*.DS_Store
