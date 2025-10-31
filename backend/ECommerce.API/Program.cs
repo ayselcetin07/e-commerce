@@ -1,7 +1,8 @@
+using ECommerce.Application.Queries;
 using ECommerce.Core.Interfaces;
-using ECommerce.Core.Services;
 using ECommerce.Infrastructure.Persistence;
 using ECommerce.Infrastructure.Repositories;
+using ECommerce.Core.Services;
 using ECommerce.Infrastructure.Services;
 using ECommerce.Application.Handlers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -9,14 +10,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MediatR;
 using System.Text;
+using ECommerce.Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//  Database
+// 🔗 Database (PostgreSQL)
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-//  JWT Authentication
+// 🔐 JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var jwtKey = jwtSettings["Key"] ?? throw new InvalidOperationException("JWT Key is missing");
 
@@ -35,7 +37,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-//  CORS Ayarı
+// 🌍 CORS Ayarı
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -46,22 +48,23 @@ builder.Services.AddCors(options =>
     });
 });
 
-//  MediatR
-builder.Services.AddMediatR(typeof(RegisterUserHandler).Assembly);
+// 📦 MediatR
+builder.Services.AddMediatR(typeof(GetAllProductsQuery).Assembly);
 
-
-//  Dependency Injection
+// 🧩 Dependency Injection
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
-//  API & Swagger
+
+// 🌐 API & Swagger
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-//  Middleware
+// 🧪 Swagger UI (Sadece Development)
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -70,11 +73,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-//  CORS Middleware
+// 🌍 CORS Middleware
 app.UseCors("AllowAll");
 
+// 🔐 JWT Middleware
 app.UseAuthentication();
 app.UseAuthorization();
+
+// 📡 Controller Routing
 app.MapControllers();
 
 app.Run();

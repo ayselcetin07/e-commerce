@@ -24,7 +24,15 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, string>
             throw new Exception("User already exists");
 
         var hash = BCrypt.Net.BCrypt.HashPassword(request.Password);
-        var user = new User { Id = Guid.NewGuid(), Email = request.Email, PasswordHash = hash };
+
+        var user = new User
+        {
+            Id = Guid.NewGuid(),
+            Email = request.Email,
+            PasswordHash = hash,
+            Role = request.Role //  Rol bilgisi burada ekleniyor
+        };
+
         await _repo.AddAsync(user);
 
         return _jwt.GenerateToken(user);
