@@ -18,4 +18,18 @@ public class ProductRepository : IProductRepository
     {
         return await _context.Products.ToListAsync();
     }
+
+    public async Task<List<string>> GetCategoriesAsync()
+    {
+        return await _context.Products
+            .Select(p => p.Category)
+            .Distinct()
+            .ToListAsync();
+    }
+    public async Task<Product?> GetByIdAsync(Guid id)
+    {
+        return await _context.Products
+            .FirstOrDefaultAsync(p => p.Id == id);
+    }
+
 }

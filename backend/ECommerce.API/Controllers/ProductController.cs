@@ -16,9 +16,29 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll(
+        [FromQuery] string? category,
+        [FromQuery] decimal? minPrice,
+        [FromQuery] decimal? maxPrice,
+        [FromQuery] string? sort)
     {
-        var products = await _mediator.Send(new GetAllProductsQuery());
+        var query = new GetFilteredProductsQuery
+        {
+            Category = category,
+            MinPrice = minPrice,
+            MaxPrice = maxPrice,
+            Sort = sort
+        };
+
+        var products = await _mediator.Send(query);
         return Ok(products);
+    }
+
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var product = await _mediator.Send(new GetProductByIdQuery { Id = id });
+        return product != null ? Ok(product) : NotFound();
     }
 }
