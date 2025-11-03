@@ -42,6 +42,7 @@ Aşağıdaki komutları sırasıyla terminalde çalıştırarak veritabanını o
 
 ```bash
 cd backend
+cd ECommerce.API
 dotnet ef database update
 dotnet run
 
@@ -86,19 +87,19 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
-
+````
 
 {
 app.UseSwagger();
 app.UseSwaggerUI();
 }
 
-
+```
 ### 6. Gerekli NuGet Paketleri
 
 Aşağıdaki NuGet paketleri backend projesinde kullanılmaktadır. Her biri terminal üzerinden aşağıdaki komutlarla yüklenebilir:
 
-```bash
+
 dotnet add package Microsoft.EntityFrameworkCore
 dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet add package Microsoft.EntityFrameworkCore.Tools
@@ -107,4 +108,5 @@ dotnet add package MediatR.Extensions.Microsoft.DependencyInjection
 dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
 dotnet add package StackExchange.Redis
 dotnet add package Swashbuckle.AspNetCore
-````
+
+```
