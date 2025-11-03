@@ -88,9 +88,8 @@ if (app.Environment.IsDevelopment())
 }
 Swagger UI’ye artık http://localhost:5011/swagger adresinden erişebilirsiniz.
 
-4. Kullanılan NuGet Paketleri
+## 4. Kullanılan NuGet Paketleri
 Backend projesinde aşağıdaki paketler kullanılmaktadır:
-
 
 
 dotnet add package Microsoft.EntityFrameworkCore
