@@ -39,7 +39,7 @@ Kodu kopyala
 Veritabanını oluşturmak ve backend API’yi başlatmak için terminalde aşağıdaki komutları çalıştırın:
 
 bash
-Kodu kopyala
+
 cd backend/ECommerce.API
 dotnet ef database update
 dotnet run
@@ -50,13 +50,13 @@ API artık http://localhost:5011 adresinde çalışıyor olacak.
 frontend/.env dosyası oluşturun ve backend API URL’ini ekleyin:
 
 env
-Kodu kopyala
+
 NEXT_PUBLIC_API_BASE_URL=http://localhost:5011/api
 2.2. Paketleri Kurun ve Uygulamayı Başlatın
 Terminalde frontend klasörüne gidip gerekli paketleri yükleyin ve uygulamayı başlatın:
 
 bash
-Kodu kopyala
+
 cd frontend
 npm install
 npm run dev
@@ -69,13 +69,13 @@ Swagger, backend API endpoint’lerini görsel olarak test etmek için kullanıl
 Backend projesinde Swashbuckle.AspNetCore paketinin yüklü olduğundan emin olun:
 
 bash
-Kodu kopyala
+
 dotnet add package Swashbuckle.AspNetCore
 3.2. Program.cs Ayarları
 Program.cs dosyasına aşağıdaki satırları ekleyin:
 
 csharp
-Kodu kopyala
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -92,7 +92,7 @@ Swagger UI’ye artık http://localhost:5011/swagger adresinden erişebilirsiniz
 Backend projesinde aşağıdaki paketler kullanılmaktadır:
 
 bash
-Kodu kopyala
+
 dotnet add package Microsoft.EntityFrameworkCore
 dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet add package Microsoft.EntityFrameworkCore.Tools
