@@ -20,7 +20,6 @@ Projede PostgreSQL veritabanı, JWT ile kimlik doğrulama ve opsiyonel Redis cac
 
 `appsettings.json` dosyasını açın ve PostgreSQL bağlantı bilgilerini kendi sisteminize göre güncelleyin:
 
-```json
 "ConnectionStrings": {
   "DefaultConnection": "Host=localhost;Port=5432;Database=ecommerce_db;Username=postgres;Password=1234"
 }
@@ -35,6 +34,7 @@ json
   "Audience": "ECommerceUsers",
   "ExpireMinutes": 60
 }
+
 1.3. Migration ve API Başlatma
 Veritabanını oluşturmak ve backend API’yi başlatmak için terminalde aşağıdaki komutları çalıştırın:
 
@@ -88,8 +88,9 @@ if (app.Environment.IsDevelopment())
 }
 Swagger UI’ye artık http://localhost:5011/swagger adresinden erişebilirsiniz.
 
-## 4. Kullanılan NuGet Paketleri
+4. Kullanılan NuGet Paketleri
 Backend projesinde aşağıdaki paketler kullanılmaktadır:
+
 
 
 dotnet add package Microsoft.EntityFrameworkCore
@@ -100,4 +101,3 @@ dotnet add package MediatR.Extensions.Microsoft.DependencyInjection
 dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
 dotnet add package StackExchange.Redis
 dotnet add package Swashbuckle.AspNetCore
-
