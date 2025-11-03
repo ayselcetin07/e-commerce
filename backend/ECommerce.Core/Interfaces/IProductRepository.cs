@@ -7,5 +7,10 @@ namespace ECommerce.Application.Interfaces
         Task<List<Product>> GetAllAsync();
         Task<List<string>> GetCategoriesAsync();
         Task<Product?> GetByIdAsync(Guid id);
+        Task UpdateAsync(Product product);
+        Task DeleteAsync(Guid id);
+        Task AddAsync(Product product);
+
     }
+
 }

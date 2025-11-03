@@ -1,36 +1,110 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# E-Commerce Uygulaması
 
-## Getting Started
+Bu proje, ASP.NET Core Web API ve Next.js App Router kullanılarak geliştirilmiş tam işlevsel bir e-ticaret uygulamasıdır. PostgreSQL veritabanı, JWT ile kimlik doğrulama ve opsiyonel Redis cache desteği içerir.
 
-First, run the development server:
+---
+
+## Gereksinimler
+
+- [.NET 7 SDK](https://dotnet.microsoft.com/en-us/download)
+- [Node.js 18+](https://nodejs.org/)
+- [PostgreSQL](https://www.postgresql.org/)
+- (Opsiyonel) [Redis](https://redis.io/) veya Docker
+
+---
+
+## Backend Kurulumu (`/backend`)
+
+### 1. Veritabanı Ayarları
+
+`appsettings.json` içinde aşağıdaki bağlantı bilgilerini düzenleyin:
+
+````json
+"ConnectionStrings": {
+  "DefaultConnection": "Host=localhost;Port=5432;Database=ecommerce_db;Username=postgres;Password=1234"
+}
+
+### 2. JWT Ayarları
+
+`appsettings.json` dosyasına aşağıdaki JWT yapılandırmasını ekleyin:
+
+```json
+"Jwt": {
+  "Key": "Aysel$EComm_SecretKey_92x!Tg#L7vQpZ@fWm3RbYk",
+  "Issuer": "ECommerceApp",
+  "Audience": "ECommerceUsers",
+  "ExpireMinutes": 60
+}
+
+### 3. Migration ve API Başlatma
+
+Aşağıdaki komutları sırasıyla terminalde çalıştırarak veritabanını oluşturabilir ve backend API’yi başlatabilirsiniz:
 
 ```bash
+cd backend
+dotnet ef database update
+dotnet run
+
+##  4. Frontend Kurulumu (`/frontend`)
+
+###  1.Ortam Değişkeni
+
+`frontend/.env` dosyası oluşturun ve aşağıdaki satırı ekleyin:
+
+```env
+NEXT_PUBLIC_API_BASE_URL=http://localhost:5011/api
+
+Bu değişken, frontend uygulamasının backend API ile iletişim kurmasını sağlar.
+
+### 2. Paketleri Kurun ve Uygulamayı Başlatın
+
+Terminalde aşağıdaki komutları sırasıyla çalıştırın:
+
+```bash
+cd frontend
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 5. Swagger Kurulumu ve API Testi
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Swagger, API endpoint'lerini görsel olarak test etmek ve dökümantasyon sağlamak için kullanılır.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+#### Gerekli Paketler
 
-## Learn More
+Proje zaten aşağıdaki NuGet paketlerini içeriyor olmalı:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+dotnet add package Swashbuckle.AspNetCore
+#### Program.cs Dosyasına Swagger Ayarları Ekleyin
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+`Program.cs` dosyasına aşağıdaki satırları ekleyin:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```csharp
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-## Deploy on Vercel
+var app = builder.Build();
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+if (app.Environment.IsDevelopment())
+````
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+{
+app.UseSwagger();
+app.UseSwaggerUI();
+}
+
+````
+### 6. Gerekli NuGet Paketleri
+
+Aşağıdaki NuGet paketleri backend projesinde kullanılmaktadır. Her biri terminal üzerinden aşağıdaki komutlarla yüklenebilir:
+
+```bash
+dotnet add package Microsoft.EntityFrameworkCore
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
+dotnet add package MediatR.Extensions.Microsoft.DependencyInjection
+dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
+dotnet add package StackExchange.Redis
+dotnet add package Swashbuckle.AspNetCore
+````

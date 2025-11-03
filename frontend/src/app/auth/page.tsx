@@ -1,11 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-/**
- * Lightweight client-side API helper to replace missing ../../lib/api module.
- * It uses fetch and respects NEXT_PUBLIC_API_URL if defined.
- */
 const baseUrl = process.env.NEXT_PUBLIC_API_URL ?? "";
 const api = {
   post: async (path: string, body?: unknown) => {
@@ -23,6 +20,7 @@ const api = {
 export default function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleRegister = async () => {
     try {
@@ -36,8 +34,8 @@ export default function AuthPage() {
   const handleLogin = async () => {
     try {
       const res = await api.post("/auth/login", { email, password });
-      alert("Giriş başarılı! Token: " + res.data.token);
       localStorage.setItem("token", res.data.token);
+      router.push("/products/manage"); // ✅ yönlendirme buraya
     } catch (err) {
       alert("Giriş başarısız");
     }

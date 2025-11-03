@@ -48,7 +48,14 @@ export default function ProductsPage() {
 
   return (
     <main className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Ürünler</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Ürünler</h1>
+        <Link href="/auth">
+          <button className="bg-purple-500 text-white px-4 py-2 rounded">
+            Giriş Yap
+          </button>
+        </Link>
+      </div>
 
       <div className="flex gap-4 mb-4">
         <button
@@ -116,25 +123,43 @@ export default function ProductsPage() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {products.map((p) => (
-          <Link key={p.id} href={`/products/${p.id}`}>
-            <div className="border rounded-lg p-4 hover:shadow-lg transition">
-              <Image
-                src={p.imageUrl}
-                alt={p.name}
-                width={300}
-                height={300}
-                className="object-cover rounded"
-              />
-              <h2 className="mt-2 font-semibold text-lg">{p.name}</h2>
-              <p className="text-gray-700">{p.price} ₺</p>
-              <p className="text-sm text-gray-500">{p.category}</p>
-              <p className="text-sm text-gray-600 mt-1">{p.description}</p>
+     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+  {products.map((p) => (
+    <Link key={p.id} href={`/products/${p.id}`}>
+      <div className="border rounded-lg p-4 hover:shadow-lg transition aspect-square flex flex-col overflow-hidden">
+        <div className="flex-grow relative w-full h-[240px] ">
+          <Image
+            src={p.imageUrl}
+            alt={p.name}
+            fill
+            className="object-contain rounded"
+          />
+        </div>
+
+        <div className="flex flex-col justify-between h-[140px] mt-3">
+          {/* Ürün ismi ortada */}
+          <h2 className="text-center text-xl font-bold text-indigo-700">
+            {p.name}
+          </h2>
+
+          <div className="flex justify-between items-end text-base">
+            {/* Sol alt: kategori + açıklama */}
+            <div className="text-left text-gray-700">
+              <p className="text-pink-600 font-medium">{p.category}</p>
+              <p className="line-clamp-2">{p.description}</p>
             </div>
-          </Link>
-        ))}
+
+            {/* Sağ alt: fiyat */}
+            <div className="text-right text-green-700 font-semibold">
+              {p.price} ₺
+            </div>
+          </div>
+        </div>
       </div>
+    </Link>
+  ))}
+</div>
+
     </main>
   );
 }

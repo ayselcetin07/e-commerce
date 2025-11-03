@@ -14,11 +14,11 @@ using ECommerce.Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 🔗 Database (PostgreSQL)
+//  Database (PostgreSQL)
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// 🔐 JWT Authentication
+//  JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var jwtKey = jwtSettings["Key"] ?? throw new InvalidOperationException("JWT Key is missing");
 
@@ -37,7 +37,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// 🌍 CORS Ayarı
+//  CORS Ayarı
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -48,23 +48,29 @@ builder.Services.AddCors(options =>
     });
 });
 
-// 📦 MediatR
+//  MediatR
 builder.Services.AddMediatR(typeof(GetAllProductsQuery).Assembly);
 
-// 🧩 Dependency Injection
+//  Dependency Injection
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJwtProvider, JwtProvider>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICacheService, RedisCacheService>(); // Redis Cache servisi eklendi
 
+//  Redis Bağlantısı
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
 
-// 🌐 API & Swagger
+//  API & Swagger
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// 🧪 Swagger UI (Sadece Development)
+//  Swagger UI (Sadece Development)
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -73,14 +79,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// 🌍 CORS Middleware
+//  CORS Middleware
 app.UseCors("AllowAll");
 
-// 🔐 JWT Middleware
+//  JWT Middleware
 app.UseAuthentication();
 app.UseAuthorization();
 
-// 📡 Controller Routing
+//  Controller Routing
 app.MapControllers();
 
 app.Run();

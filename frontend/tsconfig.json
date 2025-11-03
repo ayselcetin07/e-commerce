@@ -16,7 +16,9 @@
     "baseUrl": ".", 
     "paths": {
       "@store/*": ["src/app/store/*"],
-      "@components/*": ["src/components/*"]  
+      "@components/*": ["src/components/*"],
+      "@Types/*": ["src/app/Types/*"],
+      "@lib/*": ["src/app/lib/*"]
     },
     "plugins": [
       {
