@@ -1,25 +1,5 @@
-# E-Commerce Uygulaması
-
-Bu proje, **ASP.NET Core Web API** ve **Next.js App Router** kullanılarak geliştirilmiş tam işlevsel bir e-ticaret uygulamasıdır.  
-Projede PostgreSQL veritabanı, JWT ile kimlik doğrulama ve opsiyonel Redis cache desteği bulunmaktadır.
-
----
-
-## Gereksinimler
-
-- [.NET 7 SDK](https://dotnet.microsoft.com/en-us/download)
-- [Node.js 18+](https://nodejs.org/)
-- [PostgreSQL](https://www.postgresql.org/)
-- (Opsiyonel) [Redis](https://redis.io/) veya Docker
-
----
-
-## 1. Backend Kurulumu (`/backend`)
-
-### 1.1. Veritabanı Ayarları
-
-`appsettings.json` dosyasını açın ve PostgreSQL bağlantı bilgilerini kendi sisteminize göre güncelleyin:
-
+# E-Commerce Uygulaması Bu proje, **ASP.NET Core Web API** ve **Next.js App Router** kullanılarak geliştirilmiş tam işlevsel bir e-ticaret uygulamasıdır. Projede PostgreSQL veritabanı, JWT ile kimlik doğrulama ve opsiyonel Redis cache desteği bulunmaktadır. --- ## Gereksinimler - [.NET 7 SDK](https://dotnet.microsoft.com/en-us/download) - [Node.js 18+](https://nodejs.org/) - [PostgreSQL](https://www.postgresql.org/) - (Opsiyonel) [Redis](https://redis.io/) veya Docker --- ## 1. Backend Kurulumu (/backend) ### 1.1. Veritabanı Ayarları appsettings.json dosyasını açın ve PostgreSQL bağlantı bilgilerini kendi sisteminize göre güncelleyin:
+json
 "ConnectionStrings": {
   "DefaultConnection": "Host=localhost;Port=5432;Database=ecommerce_db;Username=postgres;Password=1234"
 }
@@ -34,7 +14,6 @@ json
   "Audience": "ECommerceUsers",
   "ExpireMinutes": 60
 }
-
 1.3. Migration ve API Başlatma
 Veritabanını oluşturmak ve backend API’yi başlatmak için terminalde aşağıdaki komutları çalıştırın:
 
