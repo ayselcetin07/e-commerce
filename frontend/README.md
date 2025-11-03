@@ -28,7 +28,7 @@ Projede PostgreSQL veritabanı, JWT ile kimlik doğrulama ve opsiyonel Redis cac
 Aynı dosyaya aşağıdaki JWT yapılandırmasını ekleyin:
 
 json
-Kodu kopyala
+
 "Jwt": {
   "Key": "Aysel$EComm_SecretKey_92x!Tg#L7vQpZ@fWm3RbYk",
   "Issuer": "ECommerceApp",
@@ -38,7 +38,7 @@ Kodu kopyala
 1.3. Migration ve API Başlatma
 Veritabanını oluşturmak ve backend API’yi başlatmak için terminalde aşağıdaki komutları çalıştırın:
 
-bash
+
 
 cd backend/ECommerce.API
 dotnet ef database update
@@ -55,7 +55,7 @@ NEXT_PUBLIC_API_BASE_URL=http://localhost:5011/api
 2.2. Paketleri Kurun ve Uygulamayı Başlatın
 Terminalde frontend klasörüne gidip gerekli paketleri yükleyin ve uygulamayı başlatın:
 
-bash
+
 
 cd frontend
 npm install
@@ -68,7 +68,7 @@ Swagger, backend API endpoint’lerini görsel olarak test etmek için kullanıl
 3.1. Gerekli NuGet Paketi
 Backend projesinde Swashbuckle.AspNetCore paketinin yüklü olduğundan emin olun:
 
-bash
+
 
 dotnet add package Swashbuckle.AspNetCore
 3.2. Program.cs Ayarları
@@ -91,7 +91,7 @@ Swagger UI’ye artık http://localhost:5011/swagger adresinden erişebilirsiniz
 4. Kullanılan NuGet Paketleri
 Backend projesinde aşağıdaki paketler kullanılmaktadır:
 
-bash
+
 
 dotnet add package Microsoft.EntityFrameworkCore
 dotnet add package Microsoft.EntityFrameworkCore.Design
@@ -101,4 +101,4 @@ dotnet add package MediatR.Extensions.Microsoft.DependencyInjection
 dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
 dotnet add package StackExchange.Redis
 dotnet add package Swashbuckle.AspNetCore
-```
+
