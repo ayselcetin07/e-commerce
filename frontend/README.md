@@ -86,14 +86,14 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
-````
+
 
 {
 app.UseSwagger();
 app.UseSwaggerUI();
 }
 
-````
+
 ### 6. Gerekli NuGet Paketleri
 
 Aşağıdaki NuGet paketleri backend projesinde kullanılmaktadır. Her biri terminal üzerinden aşağıdaki komutlarla yüklenebilir:
