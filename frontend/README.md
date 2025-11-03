@@ -1,6 +1,7 @@
 # E-Commerce Uygulaması
 
-Bu proje, ASP.NET Core Web API ve Next.js App Router kullanılarak geliştirilmiş tam işlevsel bir e-ticaret uygulamasıdır. PostgreSQL veritabanı, JWT ile kimlik doğrulama ve opsiyonel Redis cache desteği içerir.
+Bu proje, **ASP.NET Core Web API** ve **Next.js App Router** kullanılarak geliştirilmiş tam işlevsel bir e-ticaret uygulamasıdır.  
+Projede PostgreSQL veritabanı, JWT ile kimlik doğrulama ve opsiyonel Redis cache desteği bulunmaktadır.
 
 ---
 
@@ -13,93 +14,85 @@ Bu proje, ASP.NET Core Web API ve Next.js App Router kullanılarak geliştirilmi
 
 ---
 
-## Backend Kurulumu (`/backend`)
+## 1. Backend Kurulumu (`/backend`)
 
-### 1. Veritabanı Ayarları
+### 1.1. Veritabanı Ayarları
 
-`appsettings.json` içinde aşağıdaki bağlantı bilgilerini düzenleyin:
+`appsettings.json` dosyasını açın ve PostgreSQL bağlantı bilgilerini kendi sisteminize göre güncelleyin:
 
-````json
+```json
 "ConnectionStrings": {
   "DefaultConnection": "Host=localhost;Port=5432;Database=ecommerce_db;Username=postgres;Password=1234"
 }
+1.2. JWT Ayarları
+Aynı dosyaya aşağıdaki JWT yapılandırmasını ekleyin:
 
-### 2. JWT Ayarları
-
-`appsettings.json` dosyasına aşağıdaki JWT yapılandırmasını ekleyin:
-
-```json
+json
+Kodu kopyala
 "Jwt": {
   "Key": "Aysel$EComm_SecretKey_92x!Tg#L7vQpZ@fWm3RbYk",
   "Issuer": "ECommerceApp",
   "Audience": "ECommerceUsers",
   "ExpireMinutes": 60
 }
+1.3. Migration ve API Başlatma
+Veritabanını oluşturmak ve backend API’yi başlatmak için terminalde aşağıdaki komutları çalıştırın:
 
-### 3. Migration ve API Başlatma
-
-Aşağıdaki komutları sırasıyla terminalde çalıştırarak veritabanını oluşturabilir ve backend API’yi başlatabilirsiniz:
-
-```bash
-cd backend
-cd ECommerce.API
+bash
+Kodu kopyala
+cd backend/ECommerce.API
 dotnet ef database update
 dotnet run
+API artık http://localhost:5011 adresinde çalışıyor olacak.
 
-##  4. Frontend Kurulumu (`/frontend`)
+2. Frontend Kurulumu (/frontend)
+2.1. Ortam Değişkeni
+frontend/.env dosyası oluşturun ve backend API URL’ini ekleyin:
 
-###  1.Ortam Değişkeni
-
-`frontend/.env` dosyası oluşturun ve aşağıdaki satırı ekleyin:
-
-```env
+env
+Kodu kopyala
 NEXT_PUBLIC_API_BASE_URL=http://localhost:5011/api
+2.2. Paketleri Kurun ve Uygulamayı Başlatın
+Terminalde frontend klasörüne gidip gerekli paketleri yükleyin ve uygulamayı başlatın:
 
-Bu değişken, frontend uygulamasının backend API ile iletişim kurmasını sağlar.
-
-### 2. Paketleri Kurun ve Uygulamayı Başlatın
-
-Terminalde aşağıdaki komutları sırasıyla çalıştırın:
-
-```bash
+bash
+Kodu kopyala
 cd frontend
 npm install
 npm run dev
+Frontend artık http://localhost:3000 adresinde çalışıyor olacak.
 
-### 5. Swagger Kurulumu ve API Testi
+3. Swagger Kurulumu ve API Testi
+Swagger, backend API endpoint’lerini görsel olarak test etmek için kullanılır.
 
-Swagger, API endpoint'lerini görsel olarak test etmek ve dökümantasyon sağlamak için kullanılır.
+3.1. Gerekli NuGet Paketi
+Backend projesinde Swashbuckle.AspNetCore paketinin yüklü olduğundan emin olun:
 
-#### Gerekli Paketler
-
-Proje zaten aşağıdaki NuGet paketlerini içeriyor olmalı:
-
-```bash
+bash
+Kodu kopyala
 dotnet add package Swashbuckle.AspNetCore
-#### Program.cs Dosyasına Swagger Ayarları Ekleyin
+3.2. Program.cs Ayarları
+Program.cs dosyasına aşağıdaki satırları ekleyin:
 
-`Program.cs` dosyasına aşağıdaki satırları ekleyin:
-
-```csharp
+csharp
+Kodu kopyala
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
-````
-
 {
-app.UseSwagger();
-app.UseSwaggerUI();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+Swagger UI’ye artık http://localhost:5011/swagger adresinden erişebilirsiniz.
 
-```
-### 6. Gerekli NuGet Paketleri
+4. Kullanılan NuGet Paketleri
+Backend projesinde aşağıdaki paketler kullanılmaktadır:
 
-Aşağıdaki NuGet paketleri backend projesinde kullanılmaktadır. Her biri terminal üzerinden aşağıdaki komutlarla yüklenebilir:
-
-
+bash
+Kodu kopyala
 dotnet add package Microsoft.EntityFrameworkCore
 dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet add package Microsoft.EntityFrameworkCore.Tools
@@ -108,5 +101,4 @@ dotnet add package MediatR.Extensions.Microsoft.DependencyInjection
 dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer
 dotnet add package StackExchange.Redis
 dotnet add package Swashbuckle.AspNetCore
-
 ```
